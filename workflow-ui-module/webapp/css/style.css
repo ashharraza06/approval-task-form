@@ -1,0 +1,66 @@
+/* Enter your custom styles here */
+.revHbox
+{
+    gap : 100px;
+    align-items: center;
+}
+.compVbox
+{
+    gap:10px;
+    font-size: 12px;
+}
+.vencode
+{
+    font-weight: bold;
+}
+.commentbtn
+{
+    align-items: end;
+    justify-content: end;
+}
+.attachvbox1
+{
+    height: 250px;
+    overflow: scroll;
+}
+.notify {
+    position: relative;
+
+    /* background-color: yellow; */
+    /* color: black; */
+    /* border: 2px solid orange; */
+    /* padding: 10px; */
+    font-weight: bold;
+    /* border-radius: 5px; */
+    animation: slideIn 12s linear infinite, glow 2s infinite alternate;
+    /* Animation duration: 4 seconds, linear easing, infinite iterations */
+}
+@keyframes glow {
+    0% { text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6), 0 0 50px rgba(255, 255, 255, 0.4); }
+    100% { text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
+  }
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+        /* Start from outside the container */
+    }
+
+    100% {
+        transform: translateX(900%);
+        /* Slide to the right edge */
+    }
+}
+
+.greenText {
+    color: mediumseagreen;
+    
+}
+
+.yellowText {
+    color: orange;
+}
+
+.redText {
+    color: orangered;
+}

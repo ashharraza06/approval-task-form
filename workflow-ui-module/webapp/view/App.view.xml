@@ -1,0 +1,196 @@
+<mvc:View controllerName="form.workflowuimodule.controller.App"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:u ="sap.uxap"
+    xmlns:upload="sap.m.upload"
+    xmlns="sap.m">
+    <App id="app">
+        <Page id = "scroll">
+            <content>
+                <!-- <form:SimpleForm id="request-information-form" editable="false" layout="ResponsiveGridLayout" singleContainerFullSize="false"> -->
+                <!-- <form:content> -->
+                <u:ObjectPageLayout id="ObjectViewPage" upperCaseAnchorBar="false" flexEnabled="true" height="100%" showFooter="true">
+                    <u:sections>
+                        <u:ObjectPageSection id="notificationpage" titleUppercase="false" title="Notification">
+                            <u:subSections>
+                                <u:ObjectPageSubSection id="subsec0" titleUppercase="false">
+                                    <u:blocks>
+                                        <VBox id="notification-container" class = "notify_container" width="100%">
+                                            <!-- <Button id = "btn" core:require="{ handler: 'approval/ext/fragment/Noti'}" text="Noti" press="handler.onPress" /> -->
+                                            <Label id="notification" class = "notify" text="This is a notification text." />
+                                        </VBox>
+                                    </u:blocks>
+                                </u:ObjectPageSubSection>
+                            </u:subSections>
+                        </u:ObjectPageSection>
+                        <u:ObjectPageSection id="complainpage" titleUppercase="false" title="View Complaint">
+                            <u:subSections>
+                                <u:ObjectPageSubSection id="subsec1" titleUppercase="false">
+                                    <u:blocks>
+                                        <!-- <Text id="complaintRaisevw" text="View Complaint" class="sapMTitle sapMTitleStyleH3 myHeaderText"/> -->
+                                        <HBox id="rev3hboxvw" class="revHbox">
+                                            <VBox id="complainvw" width="100%">
+                                                <VBox id="compvboxvw" class="compVbox">
+                                                    <HBox id="pan_venvw" width="100%">
+                                                        <VBox id="compnovw" width="30%">
+                                                            <Label id="selcomvw" text="Complaint No:"/>
+                                                            <Text id="comp_valvw" class="vencode" text="{context>/complainno}" />
+                                                        </VBox>
+                                                        <VBox id="panvw" width="30%">
+                                                            <Label id="selpanvw" text="Pan Number:"/>
+                                                            <Text id="pan_valvw" class="vencode" text="{context>/cpannum}" />
+                                                        </VBox>
+                                                        <VBox id="venvw" width="30%">
+                                                            <Label id="selvenvw" text="Vendor Code:"/>
+                                                            <Text id="ven_valvw" class="vencode" text="{context>/cvencode}" />
+                                                        </VBox>
+                                                    </HBox>
+                                                    <HBox id="po_typevw" width="100%">
+                                                        <VBox id="povw" width="30%">
+                                                            <Label id="selpovw" text="PO/Invoice Number:"/>
+                                                            <Text id="po_valvw" class="vencode" text="{context>/cpono}" />
+                                                        </VBox>
+                                                        <VBox id="typevw" width="30%">
+                                                            <Label id="seltypvw" text="Complaint Type:"/>
+                                                            <Text id="typ_valvw" class="vencode" text="{context>/ccomplain_about}" />
+                                                        </VBox>
+                                                        <VBox id="statusvw" width="30%">
+                                                            <Label id="selstatusvw" text="Status:"/>
+                                                            <Text id="status_valvw" class="vencode" text="{context>/cstatus}" />
+                                                        </VBox>
+                                                    </HBox>
+                                                    <VBox id="descvw" width="100%">
+                                                        <Label id="selabtvw" text="Complaint Description:"/>
+                                                        <TextArea id="dsc_valvw" editable="false" value="{context>/cdesc}" width="100%" height="150px"></TextArea>
+
+                                                    </VBox>
+                                                </VBox>
+                                            </VBox>
+                                        </HBox>
+                                    </u:blocks>
+                                </u:ObjectPageSubSection>
+                            </u:subSections>
+                        </u:ObjectPageSection>
+                        <u:ObjectPageSection id="commpage" titleUppercase="false" title="Comments">
+                            <u:subSections>
+                                <u:ObjectPageSubSection id="subsec2">
+                                    <u:blocks>
+                                        <!-- Comments code will be here -->
+                                        <VBox id= "vv" class = "commentvbox" width="100%">
+                                            <HBox id="buttonContainer" alignItems="End" justifyContent="End" width="100%">
+                                                <Button id="comm" class = "commentbtn" text="Comments" press="comments" icon="sap-icon://comment" />
+                                            </HBox>
+                                            <TextArea id="ta" rows="8" width="100%" value="{context>/comments}" editable="true" class="commenthbox" />
+                                            <Text id="appid" visible="false" text="{context>/approvedBy}"/>
+                                        </VBox>
+
+                                    </u:blocks>
+                                </u:ObjectPageSubSection>
+                            </u:subSections>
+                        </u:ObjectPageSection>
+                        <u:ObjectPageSection id="attachpage" titleUppercase="false" title="Attachments">
+                            <u:subSections>
+                                <u:ObjectPageSubSection id="subsec3">
+                                    <u:blocks>
+                                        <!-- <Text id="attachmentsvw" text="Attachments" class="sapMTitle sapMTitleStyleH3 myHeaderText"/> -->
+                                        <VBox id="112vw" class="attachvbox1">
+                                            <upload:UploadSet id="uploadSet1vw" instantUpload="false" uploadEnabled="false" uploadButtonInvisible="true" mode="none" showIcons="true" afterItemAdded="onAfterItemAdded" uploadCompleted="onUploadCompleted" items="{
+                                        path: 'context>/filesData',
+                                        templateShareable: false}">
+                                                <upload:toolbar>
+                                                </upload:toolbar>
+                                                <upload:items>
+                                                    <upload:UploadSetItem id="ddd1vw" enabledRemove="false" visibleEdit="false" visibleRemove="false" fileName="{context>fileName}" mediaType="{context>mediaType}" url="{context>url}" thumbnailUrl="{
+                                                path: 'context>/mediaType',
+                                                formatter:'formatThumbnailUrl'
+                                            }" enabledEdit="false" openPressed="onOpenPressed" removePressed="onRemovePressed">
+                                                        <upload:attributes>
+                                                            <ObjectAttribute id="dd1vw" title="Uploaded By" text="{context>createdBy}" active="false" />
+                                                            <ObjectAttribute id="dd221vw" title="Uploaded on" text="{context>createdAt}" active="false" />
+                                                            <ObjectAttribute id="dddw21vw" title="File Type" text="{context>mediaType}" active="false" />
+                                                            <ObjectAttribute id="dd22a1vw" title="File Size" text="{context>size}" active="false" />
+                                                        </upload:attributes>
+                                                    </upload:UploadSetItem>
+                                                </upload:items>
+                                            </upload:UploadSet>
+                                        </VBox>
+                                    </u:blocks>
+                                </u:ObjectPageSubSection>
+                            </u:subSections>
+                        </u:ObjectPageSection>
+                        <u:ObjectPageSection id="workflowpage" titleUppercase="false" title="Workflow History">
+                            <u:subSections>
+                                <u:ObjectPageSubSection id="subsec4">
+                                    <u:blocks>
+                                        <VBox id="v1">
+
+                                            <!-- <Title text="Level1" id="title1"/> -->
+                                            <!-- <Button core:require="{ handler: 'headscm2/ext/fragment/Worflow_History'}" text="Workflow History" press="handler.onPress" id="b1" visible="false"/> -->
+                                            <ScrollContainer id="scrollContainer" height="280px" width="100%">
+                                                <Table id="table" items = "{ path: 'context>/table'}">
+                                                    <columns>
+                                                        <Column width="11rem" id="c022" styleClass="colClass">
+                                                            <Text text="Level" id="level"/>
+                                                        </Column>
+                                                        <!-- <Column width="11rem" id="c22" styleClass="colClass">
+                                                                    <Text text="Title" id="Title"/>
+                                                                </Column> -->
+                                                        <Column id="c1" width="14rem" styleClass="colClass">
+                                                            <Text text="Users" id="Employee_ID" width="14rem"/>
+                                                        </Column>
+                                                        <!-- <Column id="c2" width="11rem" styleClass="colClass">
+                                                                    <Text text="Employee Name" id="Employee_Name" width="11rem"/>
+                                                                </Column> -->
+                                                        <Column id="c3" width="11rem" styleClass="colClass">
+                                                            <Text text="Begin Date" id="Begin_DateAND_Time" width="11rem"/>
+                                                        </Column>
+                                                        <Column id="c4" width="11rem" styleClass="colClass">
+                                                            <Text text="End Date" id="End_DateAND_Time"/>
+                                                        </Column>
+                                                        <Column id="c5" width="11rem" styleClass="colClass">
+                                                            <Text text="Days Taken" id="Days_Taken"/>
+                                                        </Column>
+                                                        <Column id="c7" width="11rem" styleClass="colClass">
+                                                            <Text text="Status" id="Status" width="11rem"/>
+                                                        </Column>
+                                                        <Column id="c6" width="11rem" styleClass="colClass">
+                                                            <Text text="Approved By" id="Approved_by"/>
+                                                        </Column>
+                                                    </columns>
+                                                    <items>
+                                                        <ColumnListItem id="cli1">
+                                                            <cells>
+                                                                <Text text="{context>level}" id="t14"/>
+                                                                <!-- <Text text="{context>Title}" id="t6"/> -->
+                                                                <Text text="{context>Employee_ID}" id="t7"/>
+                                                                <!-- <Text text="{context>Employee_Name}" id="t8"/> -->
+                                                                <Text text="{context>Begin_DateAND_Time}" id="t9"/>
+                                                                <Text text="{context>End_DateAND_Time}" id="t11"/>
+                                                                <Text text="{context>Days_Taken}" id="t12"/>
+                                                                <Text text="{context>Notification_Status}" id="t17"/>
+                                                                <Text text="{context>Approved_by}" id="t13"/>
+                                                            </cells>
+                                                        </ColumnListItem>
+                                                    </items>
+                                                </Table>
+                                            </ScrollContainer>
+                                        </VBox>
+
+                                    </u:blocks>
+                                </u:ObjectPageSubSection>
+                            </u:subSections>
+                        </u:ObjectPageSection>
+                    </u:sections>
+                </u:ObjectPageLayout>
+                <!-- </form:content> -->
+                <!-- </form:SimpleForm> -->
+            </content>
+        </Page>
+    </App>
+</mvc:View>
