@@ -43,16 +43,19 @@ sap.ui.define(
         }
         debugger
         var commresult = this.getOwnerComponent().oModels.context.oData.commentsin;
+        var pic = "https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png";
         for (var i = 0; i < commresult.length; i++) {
+
+
           var oTimelineItem = new sap.suite.ui.commons.TimelineItem("thisuniqid1" + generateUniqueId(), {
             dateTime: commresult[i].createdAt,
-            // title: "demo title1",
             userNameClickable: false,
+            // title: title,
             // userNameClicked: "onUserNameClick",
             // select: onPressItems,
-            // userPicture: "Photo",
-            text: commresult[i].comments
-            // userName: result[i].CREATEDBY
+            userPicture: pic,
+            text: commresult[i].comments,
+            userName: commresult[i].createdBy
           });
           cdialog.addContent(oTimelineItem);
         }
@@ -107,37 +110,63 @@ sap.ui.define(
         // Convert milliseconds to days
         const days = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
         // var days = daysDiff.toString();
-        var notify = (7 - days) + " days left to take action";
-        // var notifyControl = sap.ui.getCore().byId("approval::complainsObjectPage--fe::CustomSubSection::Noti--notification");
-        var notifyControl = this.byId("notification");
+        var lvl = this.getOwnerComponent().oModels.context.oData.clevel;
+        if (lvl == "1.0") {
+          const workingdays = 7;
 
-        // Remove existing color classes if any
-        notifyControl.removeStyleClass("greenText yellowText redText");
+          var notify = (workingdays - days) + " days left to take action";
+          // var notifyControl = sap.ui.getCore().byId("approval::complainsObjectPage--fe::CustomSubSection::Noti--notification");
+          var notifyControl = this.byId("notification");
 
-        // Add color class based on the value of days
-        if (days <= 2) {
-          notifyControl.addStyleClass("greenText");
-        } else if (days >= 3 && days <= 5) {
-          notifyControl.addStyleClass("yellowText");
-        } else {
-          notifyControl.addStyleClass("redText");
+          // Remove existing color classes if any
+          notifyControl.removeStyleClass("greenText yellowText redText");
+
+          // Add color class based on the value of days
+          if (days <= 2) {
+            notifyControl.addStyleClass("greenText");
+          } else if (days >= 3 && days <= 5) {
+            notifyControl.addStyleClass("yellowText");
+          } else {
+            notifyControl.addStyleClass("redText");
+          }
+
+          notifyControl.setText(notify);
         }
 
-        notifyControl.setText(notify);
+        else if (lvl == "2.0") {
+          const workingdays = 21;
+
+          var notify = (workingdays - days) + " days left to take action";
+          // var notifyControl = sap.ui.getCore().byId("approval::complainsObjectPage--fe::CustomSubSection::Noti--notification");
+          var notifyControl = this.byId("notification");
+
+          // Remove existing color classes if any
+          notifyControl.removeStyleClass("greenText yellowText redText");
+
+          // Add color class based on the value of days
+          if (days <= 6) {
+            notifyControl.addStyleClass("greenText");
+          } else if (days >= 6 && days <= 16) {
+            notifyControl.addStyleClass("yellowText");
+          } else {
+            notifyControl.addStyleClass("redText");
+          }
+
+          notifyControl.setText(notify);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     });

@@ -178,6 +178,11 @@
                     "title": "cdesc",
                     "description": "cdesc"
                 },
+                "clevel": {
+                    "type": "string",
+                    "title": "clevel",
+                    "description": "clevel"
+                },
                 "table": {
                     "type" : "array",
                     "title": "workflowtable",

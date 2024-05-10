@@ -100,7 +100,7 @@
                                     <u:blocks>
                                         <!-- <Text id="attachmentsvw" text="Attachments" class="sapMTitle sapMTitleStyleH3 myHeaderText"/> -->
                                         <VBox id="112vw" class="attachvbox1">
-                                            <upload:UploadSet id="uploadSet1vw" instantUpload="false" uploadEnabled="false" uploadButtonInvisible="true" mode="none" showIcons="true" afterItemAdded="onAfterItemAdded" uploadCompleted="onUploadCompleted" items="{
+                                            <upload:UploadSet id="uploadSet1vw" instantUpload="false" uploadEnabled="false" uploadButtonInvisible="true" showIcons="true" afterItemAdded="onAfterItemAdded" uploadCompleted="onUploadCompleted" mode="None" items="{
                                         path: 'context>/filesData',
                                         templateShareable: false}">
                                                 <upload:toolbar>
