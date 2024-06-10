@@ -9,7 +9,7 @@ sap.ui.define([
 
         return Controller.extend("form.workflowuimodule.controller.MyTaskUI", {
             onInit: function () {
-
+                debugger
             }
         });
     });

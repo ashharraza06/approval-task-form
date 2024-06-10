@@ -183,6 +183,11 @@
                     "title": "clevel",
                     "description": "clevel"
                 },
+                "baseurl": {
+                    "type": "string",
+                    "title": "baseurl",
+                    "description": "baseurl"
+                },
                 "table": {
                     "type" : "array",
                     "title": "workflowtable",
@@ -220,6 +225,8 @@
                     "title": "approvedBy",
                     "description": "approvedBy"
                 }
+
+
             }
         },
         "category": "approval"

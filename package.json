@@ -7,8 +7,9 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^7",
-    "express": "^4",
-    "@sap/cds-hana": "^2"
+    "@sap/cds-hana": "^2",
+    "@sap/xssec": "^4.0.0",
+    "express": "^4"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
@@ -23,7 +24,8 @@
   },
   "cds": {
     "requires": {
-      "db": "hana"
+      "db": "hana",
+      "auth": "dummy"
     }
   }
 }

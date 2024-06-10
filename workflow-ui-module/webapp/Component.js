@@ -34,115 +34,182 @@ sap.ui.define(
 
           const rejectOutcomeId = "reject";
           this.getInboxAPI().addAction(
-              {
+            {
               action: rejectOutcomeId,
               label: "Revert Back",
               type: "reject",
-              },
-              function () {
+            },
+            function () {
+              // var data = this.getModel("device").getData().approveddata;
+              // data = JSON.parse(data);
+              // var compno = data.compno;
+              // var comm = data.commout;
+              // var lvl = data.clevel;
+              // var approved = data.username;
+              // var url = data.url;
+              // var comptype = data.comptype;
+              // let testdata = JSON.stringify({
+              //   pono: compno,
+              //   pannum: comm,
+              //   amount: lvl,
+              //   vendor: approved,
+              //   type: "Reverted"
+              // });
+              // url = url + "/odata/v4/my/poheader/" + compno;
+              // await $.ajax({
+              //   url: url,
+              //   type: 'PUT',
+              //   contentType: 'application/json',
+              //   data: testdata,
+              //   success: function (data) {
+              //     debugger
+              //     // Handle success
+              //     console.log(data);
+
+              //   },
+              //   error: function (jqXHR, textStatus, errorThrown) {
+              //     // Handle error
+              //     debugger
+              //     console.error(textStatus, errorThrown);
+              //   }
+              // });
               this.completeTask(false, rejectOutcomeId);
-              },
-              this
+            },
+            this
           );
           const approveOutcomeId = "approve";
           this.getInboxAPI().addAction(
-              {
+            {
               action: approveOutcomeId,
               label: "Resolve",
               type: "accept",
-              },
-              function () {
-              this.completeTask(true, approveOutcomeId);
-              },
-              this
-          );
-          },
+            },
+            function () {
+              debugger;
+              // var data = this.getModel("device").getData().approveddata;
+              // data = JSON.parse(data);
+              // var compno = data.compno;
+              // var comm = data.commout;
+              // var lvl = data.clevel;
+              // var approved = data.username;
+              // var url = data.url;
+              // var comptype = data.comptype;
+              // let testdata = JSON.stringify({
+              //   pono: compno,
+              //   pannum: comm,
+              //   amount: lvl,
+              //   vendor: approved,
+              //   type: "Approved"
+              // });
+              // url = url + "/odata/v4/my/poheader/" + compno;
+              // await $.ajax({
+              //   url: url,
+              //   type: 'PUT',
+              //   contentType: 'application/json',
+              //   data: testdata,
+              //   success: function (data) {
+              //     debugger
+              //     // Handle success
+              //     console.log(data);
 
-          setTaskModels: function () {
+              //   },
+              //   error: function (jqXHR, textStatus, errorThrown) {
+              //     // Handle error
+              //     debugger
+              //     console.error(textStatus, errorThrown);
+              //   }
+              // });
+              this.completeTask(true, approveOutcomeId);
+            },
+            this
+          );
+        },
+
+        setTaskModels: function () {
           // set the task model
           var startupParameters = this.getComponentData().startupParameters;
           this.setModel(startupParameters.taskModel, "task");
 
           // set the task context model
           var taskContextModel = new sap.ui.model.json.JSONModel(
-              this._getTaskInstancesBaseURL() + "/context"
+            this._getTaskInstancesBaseURL() + "/context"
           );
           this.setModel(taskContextModel, "context");
-          },
+        },
 
-          _getTaskInstancesBaseURL: function () {
+        _getTaskInstancesBaseURL: function () {
           return (
-              this._getWorkflowRuntimeBaseURL() +
-              "/task-instances/" +
-              this.getTaskInstanceID()
+            this._getWorkflowRuntimeBaseURL() +
+            "/task-instances/" +
+            this.getTaskInstanceID()
           );
-          },
+        },
 
-          _getWorkflowRuntimeBaseURL: function () {  
-            var ui5CloudService = this.getManifestEntry("/sap.cloud/service").replaceAll(".", "");  
-            var ui5ApplicationName = this.getManifestEntry("/sap.app/id").replaceAll(".", "");  
-            var appPath = `${ui5CloudService}.${ui5ApplicationName}`;
-            return `/${appPath}/api/public/workflow/rest/v1`
+        _getWorkflowRuntimeBaseURL: function () {
+          var ui5CloudService = this.getManifestEntry("/sap.cloud/service").replaceAll(".", "");
+          var ui5ApplicationName = this.getManifestEntry("/sap.app/id").replaceAll(".", "");
+          var appPath = `${ui5CloudService}.${ui5ApplicationName}`;
+          return `/${appPath}/api/public/workflow/rest/v1`
 
-          },
+        },
 
-          getTaskInstanceID: function () {
+        getTaskInstanceID: function () {
           return this.getModel("task").getData().InstanceID;
-          },
+        },
 
-          getInboxAPI: function () {
+        getInboxAPI: function () {
           var startupParameters = this.getComponentData().startupParameters;
           return startupParameters.inboxAPI;
-          },
+        },
 
-          completeTask: function (approvalStatus, outcomeId) {
+        completeTask: function (approvalStatus, outcomeId) {
           this.getModel("context").setProperty("/approved", approvalStatus);
           this._patchTaskInstance(outcomeId);
-          },
+        },
 
-          _patchTaskInstance: function (outcomeId) {
+        _patchTaskInstance: function (outcomeId) {
           const context = this.getModel("context").getData();
           var data = {
-              status: "COMPLETED",
+            status: "COMPLETED",
               context: {...context, comment: context.comment || ''},
-              decision: outcomeId
+            decision: outcomeId
           };
 
           jQuery.ajax({
-              url: `${this._getTaskInstancesBaseURL()}`,
-              method: "PATCH",
-              contentType: "application/json",
-              async: true,
-              data: JSON.stringify(data),
-              headers: {
+            url: `${this._getTaskInstancesBaseURL()}`,
+            method: "PATCH",
+            contentType: "application/json",
+            async: true,
+            data: JSON.stringify(data),
+            headers: {
               "X-CSRF-Token": this._fetchToken(),
-              },
+            },
           }).done(() => {
-              this._refreshTaskList();
+            this._refreshTaskList();
           })
-          },
+        },
 
-          _fetchToken: function () {
+        _fetchToken: function () {
           var fetchedToken;
 
           jQuery.ajax({
-              url: this._getWorkflowRuntimeBaseURL() + "/xsrf-token",
-              method: "GET",
-              async: false,
-              headers: {
+            url: this._getWorkflowRuntimeBaseURL() + "/xsrf-token",
+            method: "GET",
+            async: false,
+            headers: {
               "X-CSRF-Token": "Fetch",
-              },
-              success(result, xhr, data) {
+            },
+            success(result, xhr, data) {
               fetchedToken = data.getResponseHeader("X-CSRF-Token");
-              },
+            },
           });
           return fetchedToken;
-          },
+        },
 
-          _refreshTaskList: function () {
+        _refreshTaskList: function () {
           this.getInboxAPI().updateTask("NA", this.getTaskInstanceID());
-          },
+        },
       }
-      );
+    );
   }
 );
